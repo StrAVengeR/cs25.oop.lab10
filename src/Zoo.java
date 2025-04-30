@@ -1,40 +1,14 @@
-abstract class Animal {
-	protected String name;
+import java.util.List;
 
-	public Animal(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-}
-
-class Mammal extends Animal {
-	public Mammal(String name) {
-		super(name);
-	}
-}
-
-class Bird extends Animal {
-	public Bird(String name) {
-		super(name);
-	}
+class Animal {
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 }
 
 public class Zoo<T extends Animal> {
-	private List<T> animals = new ArrayList<>();
-
-	public void addAnimal(T animal) {
-		animals.add(animal);
-	}
-
-	// Хэрэгжүүл: transferAnimals
-	public void transferAnimals(List<? extends T> source, List<? super T> destination) {
-		// Бүх амьтдыг source-оос destination руу шилжүүл
-	}
-
-	public List<T> getAnimals() {
-		return animals;
-	}
+    public void transferAnimals(List<? extends T> source, List<? super T> destination) {
+        destination.addAll(source);
+        source.clear();
+    }
 }
