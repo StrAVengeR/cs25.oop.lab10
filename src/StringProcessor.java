@@ -1,16 +1,28 @@
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 public class StringProcessor {
-	public static void processStrings(List<String> strings,
-			Predicate<String> filter,
-			Function<String, String> transformer,
-			Consumer<String> printer) {
-		// Хэрэгжүүл: filter, transform, print хий
-	}
+    public void processStrings(List<String> input,
+                               Predicate<String> predicate,
+                               Function<String, String> transformer,
+                               Consumer<String> action) {
 
-	public static void main(String[] args) {
-		List<String> words = Arrays.asList("Java", "Програмчлал", "Код");
-		// Хэрэгжүүл: Predicate, Function, Consumer-ийг тодорхойлж, processStrings дууд
-	}
+        input.stream()
+             .filter(predicate)
+             .map(transformer)
+             .forEach(action);
+    }
+
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("гаршил", "моргаль", "тусламж");
+
+        StringProcessor processor = new StringProcessor();
+
+        Predicate<String> pred = s -> s.length() > 5;
+        Function<String, String> func = s -> new StringBuilder(s).reverse().toString();
+        Consumer<String> cons = s -> System.out.println("ГАРШИЛ: " + s.toUpperCase());
+
+        processor.processStrings(words, pred, func, cons);
+    }
 }
